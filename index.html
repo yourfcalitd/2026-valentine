@@ -1,19 +1,28 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <!-- (1) Character set + mobile scaling -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- (2) This shows on the browser tab -->
   <title>Valentine?</title>
+
   <style>
+    /* (3) Base font for the page */
     :root { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+
+    /* (4) Page background and centering */
     body {
       margin: 0;
       min-height: 100vh;
       display: grid;
       place-items: center;
-      background: #0b0b10;
+      background: #e89eb8; /* EDIT THIS: background colour */
       color: #fff;
     }
+
+    /* (5) The “card” box */
     .card {
       width: min(520px, 92vw);
       background: rgba(255,255,255,0.06);
@@ -23,8 +32,12 @@
       text-align: center;
       backdrop-filter: blur(8px);
     }
+
+    /* (6) Title + paragraph styling */
     h1 { margin: 6px 0 14px; font-size: 26px; }
     p { margin: 0 0 14px; opacity: 0.9; }
+
+    /* (7) The image container */
     .media {
       width: 100%;
       aspect-ratio: 16 / 10;
@@ -35,12 +48,16 @@
       place-items: center;
       margin: 14px 0 18px;
     }
+
+    /* (8) The image itself */
     .media img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
     }
+
+    /* (9) Button row */
     .btnrow {
       display: flex;
       gap: 12px;
@@ -49,6 +66,8 @@
       position: relative;
       height: 54px;
     }
+
+    /* (10) Button styling */
     button {
       border: 0;
       border-radius: 999px;
@@ -59,56 +78,76 @@
       user-select: none;
     }
     button:active { transform: scale(0.98); }
-    #yesBtn { background: #ff3b7a; color: white; }
+
+    /* (11) “Yes” button colour */
+    #yesBtn { background: #ff3b7a; color: white; } /* EDIT THIS: Yes button colour */
+
+    /* (12) “No” button style */
     #noBtn  { background: rgba(255,255,255,0.12); color: white; position: relative; }
+
+    /* (13) Tiny text at bottom */
     .tiny { font-size: 12px; opacity: 0.75; margin-top: 14px; }
+
+    /* (14) When success happens, bigger title */
     .success h1 { font-size: 30px; }
   </style>
 </head>
+
 <body>
+  <!-- (15) The main card -->
   <div class="card" id="card">
-    <h1 id="title">Will you be my valentine? 💌</h1>
-    <p id="subtitle">Be honest. I can handle it. (Probably.)</p>
 
+    <!-- (16) The main question text -->
+    <h1 id="title">My dear boyfriend, will you be my valentine? 💌</h1> <!-- EDIT THIS -->
+
+    <!-- (17) Small subtitle under it -->
+    <p id="subtitle">Be honest. I can handle it. (Probably.)</p> <!-- EDIT THIS -->
+
+    <!-- (18) Image/GIF area -->
     <div class="media">
-      <img id="img" alt="cute gif" src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif">
+      <img id="img" alt="cute gif"
+           src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif"> <!-- EDIT THIS GIF -->
     </div>
 
+    <!-- (19) Buttons -->
     <div class="btnrow" id="btnrow">
-      <button id="yesBtn">Yes</button>
-      <button id="noBtn">No</button>
+      <button id="yesBtn">Yes</button>  <!-- EDIT THIS label -->
+      <button id="noBtn">No</button>    <!-- EDIT THIS label -->
     </div>
 
-    <div class="tiny">Tip: swap the GIF links for your own favourites ✨</div>
+    <!-- (20) Bottom hint text -->
+    <div class="tiny">Tip: swap the GIF links for your own favourites ✨</div> <!-- optional -->
   </div>
 
   <script>
-    // 1) Change these to whatever vibe you want:
+    /* (21) These are the “No” stages (each click changes text + image) */
     const noStages = [
       {
-        title: "Wait… really? 😳",
-        subtitle: "Think again.",
-        img: "https://media.giphy.com/media/l0HlNQ03J5JxX6lva/giphy.gif"
+        title: "Wait… really? 😳",        // EDIT THIS
+        subtitle: "Perhaps think again...",        // EDIT THIS
+        img: "https://media.giphy.com/media/l0HlNQ03J5JxX6lva/giphy.gif" // EDIT THIS
       },
       {
-        title: "Are you 100% sure? 🥺",
+        title: "But why? 🥺",
         subtitle: "This is your final answer?",
         img: "https://media.giphy.com/media/9Y5BbDSkSTiY8/giphy.gif"
       },
       {
-        title: "Okay but what if I asked nicely? 😤",
-        subtitle: "Try pressing Yes. Just once.",
+        title: "Why won't you be my valentine? 🥲",
+        subtitle: "Try pressing Yes. Just once. Pretty please.",
         img: "https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif"
       },
       {
-        title: "I’m not accepting ‘No’ 😌",
+        title: "Well too bad, I’m not accepting ‘No’ 😌",
         subtitle: "The button may become… uncooperative.",
         img: "https://media.giphy.com/media/13CoXDiaCcCoyk/giphy.gif"
       }
     ];
 
+    /* (22) Tracks how many times “No” was pressed */
     let noCount = 0;
 
+    /* (23) Grab elements from the page so we can change them */
     const titleEl = document.getElementById("title");
     const subEl = document.getElementById("subtitle");
     const imgEl = document.getElementById("img");
@@ -117,30 +156,32 @@
     const yesBtn = document.getElementById("yesBtn");
     const noBtn = document.getElementById("noBtn");
 
+    /* (24) Function that updates title/subtitle/image */
     function applyStage(stage) {
       titleEl.textContent = stage.title;
       subEl.textContent = stage.subtitle;
       imgEl.src = stage.img;
     }
 
+    /* (25) What happens when “No” is clicked */
     noBtn.addEventListener("click", () => {
       noCount++;
 
-      // escalate text/images
+      // pick the right stage (stops at the last one)
       const stage = noStages[Math.min(noCount - 1, noStages.length - 1)];
       applyStage(stage);
 
-      // make Yes button gradually more irresistible
+      // make “Yes” button grow a bit each time
       const scale = 1 + Math.min(noCount * 0.10, 0.6);
       yesBtn.style.transform = `scale(${scale})`;
 
-      // after a few "No"s, start dodging
+      // after 3 No’s, make the No button start dodging
       if (noCount >= 3) {
         dodgeNoButton();
       }
     });
 
-    // Classic dodge: moves the No button somewhere else inside the button row
+    /* (26) Moves the No button to a random spot inside the row */
     function dodgeNoButton() {
       const area = btnrow.getBoundingClientRect();
       const btn = noBtn.getBoundingClientRect();
@@ -156,34 +197,37 @@
       noBtn.style.top = `${y}px`;
     }
 
-    // dodge on hover too (more chaotic, optional)
+    /* (27) Also dodge when your mouse tries to hover */
     noBtn.addEventListener("mouseenter", () => {
       if (noCount >= 3) dodgeNoButton();
     });
 
+    /* (28) What happens when “Yes” is clicked */
     yesBtn.addEventListener("click", () => {
       card.classList.add("success");
+
+      // replace the whole card with a success screen
       card.innerHTML = `
-        <h1>YAY!!! 💖</h1>
-        <p>Okay, it’s official. You’re my valentine.</p>
+        <h1>YAY!!! 💖</h1>  <!-- EDIT THIS -->
+        <p>Okayyyy, it’s official. You’re my valentineeeeeee.</p> <!-- EDIT THIS -->
         <div class="media">
-          <img alt="celebrate" src="https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif">
+          <img alt="celebrate" src="https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif"> <!-- EDIT THIS -->
         </div>
         <p><strong>Date idea:</strong> ${pickDateIdea()}</p>
-        <div class="tiny">Made with (beginner) code + maximum feelings.</div>
+        <div class="tiny">Made with (beginner) code + maximum feelings.</div> <!-- optional -->
       `;
     });
 
+    /* (29) Random date idea chooser */
     function pickDateIdea() {
       const ideas = [
-        "pizza + a movie + stealing your hoodie",
-        "a cute walk + dessert + photos together",
-        "home-cooked dinner + your favourite playlist",
-        "arcade / mini golf + “winner chooses dessert”"
+        "paint a ceramic vase for me to put the flowers you give me in",     // EDIT THIS
+        "a delicious home-cooked meal that we made together",    // EDIT THIS
+        "ghibli movie night in",
+        "car drives to new places”"
       ];
       return ideas[Math.floor(Math.random() * ideas.length)];
     }
   </script>
 </body>
 </html>
-
